@@ -6,7 +6,7 @@
 #    By: jyao <jyao@student.42abudhabi.ae>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 10:29:56 by jyao              #+#    #+#              #
-#    Updated: 2025/01/12 15:06:04 by jyao             ###   ########.fr        #
+#    Updated: 2025/01/13 11:26:56 by jyao             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ DOCKERFILE_BUILD_CONTEXT = ./
 IMAGE_NAME = portolio-dev-env:latest
 CONTAINER_NAME = portolio-dev-env-c
 CONTAINER_WORKDIR = /workdir
-CONTAINER_PORTS = -p 443:443 -p 80:80 -p 3000:3000 -p 5173:5173 -p 51
+CONTAINER_PORTS = -p 443:443 -p 80:80 -p 3000:3000 -p 5173:5173 -p 5172:5172
 
 .PHONY: all usage build start clean fclean
 
