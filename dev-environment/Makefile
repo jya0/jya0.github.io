@@ -6,7 +6,7 @@
 #    By: jyao <jyao@student.42abudhabi.ae>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 10:29:56 by jyao              #+#    #+#              #
-#    Updated: 2025/01/10 14:41:02 by jyao             ###   ########.fr        #
+#    Updated: 2025/01/12 15:06:04 by jyao             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ DOCKERFILE_PATH = ./
 DOCKERFILE_NAME = Dockerfile
 DOCKERFILE_FILE = $(DOCKERFILE_PATH)$(DOCKERFILE_NAME)
 DOCKERFILE_BUILD_CONTEXT = ./
-IMAGE_NAME = ocaml-dev-env:latest
-CONTAINER_NAME = ocaml-dev-env-c
+IMAGE_NAME = portolio-dev-env:latest
+CONTAINER_NAME = portolio-dev-env-c
 CONTAINER_WORKDIR = /workdir
+CONTAINER_PORTS = -p 443:443 -p 80:80 -p 3000:3000 -p 5173:5173 -p 51
 
 .PHONY: all usage build start clean fclean
 
@@ -24,11 +25,11 @@ all: usage
 
 usage:
 	@echo "USAGE:"
-	@echo "    <make build>              builds the OCaml development environment docker image"
-	@echo "    <make start [PATH]>       starts the OCaml development environment container at the current working directory"
+	@echo "    <make build>              builds the portolio development environment docker image"
+	@echo "    <make start [PATH]>       starts the portolio development environment container at the current working directory"
 	@echo "                              if [PATH] a full/absolute path is specified, the container will load all files at this location into the container instead"
-	@echo "    <make clean>              clears the OCaml development environment docker container"
-	@echo "    <make fclean>             clears the OCaml development environment docker container and image"
+	@echo "    <make clean>              clears the portolio development environment docker container"
+	@echo "    <make fclean>             clears the portolio development environment docker container and image"
 
 
 build:
@@ -42,7 +43,7 @@ start:
 ifeq ($(words $(MAKECMDGOALS)), 2)
 	mkdir -p $(word 2, $(MAKECMDGOALS))
 	docker run -it \
-	-p 443:443 -p 80:80 \
+	$(CONTAINER_PORTS) \
 	--name $(CONTAINER_NAME) \
 	--rm \
 	-w /workdir \
@@ -52,7 +53,7 @@ ifeq ($(words $(MAKECMDGOALS)), 2)
 else
 ifeq ($(words $(MAKECMDGOALS)), 1)
 	docker run -it \
-	-p 443:443 -p 80:80 \
+	$(CONTAINER_PORTS) \
 	--name $(CONTAINER_NAME) \
 	--rm \
 	-w /workdir \

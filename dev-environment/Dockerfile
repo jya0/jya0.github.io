@@ -4,19 +4,20 @@
 ### https://stackoverflow.com/questions/75309371/dockerfile-with-heredoc-running-in-bash
 
 ### ARG and ENV declaration and initialisation
-ARG UBUNTU_VER_LATEST=latest
-ARG UBUNTU_VER_PENULTIMATE=jammy
+ARG BASE_IMAGE=alpine
+ARG ALPINE_LATEST=latest
+ARG ALPINE_PENULTIMATE=3.20.5
 
 ### Base image
-FROM ubuntu:${UBUNTU_VER_PENULTIMATE}
+FROM ${BASE_IMAGE}:${ALPINE_PENULTIMATE}
 
 
 ### Installation phase
 
 ###### Utilties install
 RUN <<EOF
-apt update
-apt install -y bash wget zsh
+apk update
+apk add bash wget zsh git
 EOF
 
 ###### setup ohmyzsh open-source, community-driven framework for managing your Zsh configuration
@@ -25,8 +26,15 @@ bash -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/i
 echo 'PROMPT=%B%F{blue}[DOCKER]%f%b$PROMPT' >> /root/.zshrc
 EOF
 
+###### install node.js and npm
+RUN <<EOF
+apk update
+apk add nodejs npm
+EOF
 
 ### Environment configuration
+
+USER root
 
 
 ### Metadata about the image specified here in the Dockerfile
