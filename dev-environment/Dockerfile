@@ -32,6 +32,12 @@ apk update
 apk add nodejs npm
 EOF
 
+###### install image related tools
+RUN <<EOF
+apk update
+apk add imagemagick
+EOF
+
 ### Environment configuration
 
 USER root
