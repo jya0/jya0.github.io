@@ -27,10 +27,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-	# Navigate to the source folder
-    # defaults:
-    #   run:
-    #     working-directory: portfolio-ver-0
+    # Navigate to the source folder
+    defaults:
+      run:
+        working-directory: portfolio-ver-0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
