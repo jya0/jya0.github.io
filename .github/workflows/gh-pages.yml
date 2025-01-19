@@ -1,44 +1,38 @@
-name: Deploy to GitHub Pages
+name: github pages
 
 on:
   push:
     branches:
-      - main # Replace with your default branch if it's not 'main'
-
-permissions:
-  contents: write
+      - main
+  pull_request:
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    # Set working directory for all steps
-    defaults:
-      run:
-        working-directory: portfolio-ver-0
-
+  deploy:
+    runs-on: ubuntu-jammy
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 20 # Use the Node.js version your project requires
+          node-version: '20'
 
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      # Step 4: Build the project
-      - name: Build the project
-        run: npm run build
+      - run: npm ci
+      - run: npm run build
 
-      # Step 5: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public # Path to your build output folder
+          publish_dir: ./public
