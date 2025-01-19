@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+
+    defaults:
+        run:
+            working-directory: portfolio-ver-0
+
     steps:
       - uses: actions/checkout@v4
 
