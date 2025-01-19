@@ -16,9 +16,9 @@ const renderer = new THREE.WebGLRenderer({
 	alpha: true,
 });
 
-camera.position.setZ(30);
-camera.aspect = window.innerWidth / window.innerHeight;
-camera.updateProjectionMatrix();
+camera.position.set(-3, 0, 30);
+// camera.aspect = window.innerWidth / window.innerHeight;
+// camera.updateProjectionMatrix();
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -26,14 +26,16 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 // Resize dynamically depending on windows size
 
-/* function onWindowResize() {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setSize(window.innerWidth, window.innerHeight);
+// Handle window resize
+function onWindowResize() {
+    // Update camera aspect ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-window.addEventListener('resize', onWindowResize, false); */
+window.addEventListener("resize", onWindowResize);
 
 // Torus
 
@@ -54,8 +56,8 @@ scene.add(torus);
 
 // Light sources
 
-const pointLight = new THREE.PointLight(0xFFFFFF, 1, 0, 0);
-pointLight.position.set(0, 100, 0);
+const pointLight = new THREE.PointLight(0xFFFFFF, 5, 0, 0);
+pointLight.position.set(0, 100, 80);
 
 const ambientLight = new THREE.AmbientLight(0xFFFFFF, 1);
 scene.add(pointLight, ambientLight);
@@ -100,7 +102,7 @@ const earth = new THREE.Mesh(
 		map: new THREE.TextureLoader().load("../assets/images/earth/earth-day.png"),
 		normalMap: new THREE.TextureLoader().load("../assets/images/earth/earth-normal-map.png"),
 		specularMap: new THREE.TextureLoader().load("../assets/images/earth/earth-specular-map.png"),
-		specular: 0x0000F0,
+		specular: 0x000040,
 	}),
 );
 
@@ -112,6 +114,10 @@ const earthCloud = new THREE.Mesh(
 		transparent: true,
 	}),
 );
+
+
+earth.position.set(-10, 0, 30);
+earthCloud.position.set(-10, 0, 30);
 
 scene.add(earth, earthCloud);
 
@@ -132,10 +138,33 @@ scene.add(lightHelper, gridHelper);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 function rotateMesh(mesh, x, y, z) {
-	mesh.rotation.x += x;
-	mesh.rotation.y += y;
-	mesh.rotation.z += z;
+	mesh.rotateX(x);
+	mesh.rotateY(y);
+	mesh.rotateZ(z);
 }
+
+
+const initCamPos = new THREE.Vector3(
+	camera.position.x,
+	camera.position.y,
+	camera.position.z
+);
+
+function moveCamera() {
+	const tScroll = document.body.getBoundingClientRect().top;
+	rotateMesh(jyaoCube, 0, 0.1, 0.1);
+	rotateMesh(earth, 0, 0.075, 0);
+	rotateMesh(earthCloud, 0, 0.075, 0);
+
+	camera.position.set(
+		initCamPos.x + tScroll * 0.02,
+		initCamPos.y + tScroll * -0.0002,
+		initCamPos.z + tScroll * -0.05,
+	);
+	console.log(`Scroll position: ${tScroll}, Camera position:`, camera.position);
+}
+
+document.addEventListener('scroll', moveCamera);
 
 // Animation Loop
 
