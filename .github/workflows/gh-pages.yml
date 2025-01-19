@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: npm run build 
       - name: Move dist to root
-        run: mv -r dist/ ../
+        run: mv dist/ ../
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
