@@ -44,13 +44,19 @@ jobs:
         run: npm run build 
       - name: Move dist to root
         run: mv dist/ ../
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          # Upload dist folder
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v4
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     # Upload dist folder
+      #     path: './dist'
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
