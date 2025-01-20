@@ -35,7 +35,7 @@ EOF
 ###### install image related tools
 RUN <<EOF
 apk update
-apk add imagemagick
+apk add imagemagick imagemagick-heic imagemagick-jpeg imagemagick-pdf imagemagick-raw imagemagick-svg imagemagick-tiff imagemagick-webp imagemagick-jxl
 EOF
 
 ### Environment configuration

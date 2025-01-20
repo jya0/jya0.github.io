@@ -83,7 +83,7 @@ for (let count = 0; count < 200; count++) {
 
 // Avatar
 
-const jyaoTexture = new THREE.TextureLoader().load("assets/images/jyao-pp.jpg")
+const jyaoTexture = new THREE.TextureLoader().load("assets/images/jyao-pp.webp")
 
 const jyaoCube = new THREE.Mesh(
 	new THREE.BoxGeometry(3, 3, 3),
@@ -99,9 +99,9 @@ scene.add(jyaoCube);
 const earth = new THREE.Mesh(
 	new THREE.SphereGeometry(5, 64, 64),
 	new THREE.MeshPhongMaterial({
-		map: new THREE.TextureLoader().load("assets/images/earth/earth-day.png"),
-		normalMap: new THREE.TextureLoader().load("assets/images/earth/earth-normal-map.png"),
-		specularMap: new THREE.TextureLoader().load("assets/images/earth/earth-specular-map.png"),
+		map: new THREE.TextureLoader().load("assets/images/earth/earth-day.webp"),
+		normalMap: new THREE.TextureLoader().load("assets/images/earth/earth-normal-map.webp"),
+		specularMap: new THREE.TextureLoader().load("assets/images/earth/earth-specular-map.webp"),
 		specular: 0x000040,
 	}),
 );
@@ -109,8 +109,8 @@ const earth = new THREE.Mesh(
 const earthCloud = new THREE.Mesh(
 	new THREE.SphereGeometry(5.1, 64, 64),
 	new THREE.MeshStandardMaterial({
-		map: new THREE.TextureLoader().load("assets/images/earth/earth-cloud.png"),
-		alphaMap: new THREE.TextureLoader().load("assets/images/earth/earth-cloud.png"),
+		map: new THREE.TextureLoader().load("assets/images/earth/earth-cloud.webp"),
+		alphaMap: new THREE.TextureLoader().load("assets/images/earth/earth-cloud.webp"),
 		transparent: true,
 	}),
 );
@@ -123,7 +123,7 @@ scene.add(earth, earthCloud);
 
 // Background
 
-// const bgTexture = new THREE.TextureLoader().load("../assets/images/landscape-grass.png");
+// const bgTexture = new THREE.TextureLoader().load("../assets/images/landscape-grass.webp");
 // bgTexture.minFilter = THREE.LinearFilter;
 // scene.background = bgTexture;
 
